@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+
+    <title>Young photograph</title>
+</head>
+
+<body>
+
+    <header>
+        <nav class="container navbar navbar-expand-lg navbar-light">
+            <h1 class="navbar-brand title" href="#">I LOVE PHOTO!</h1>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-md-center" id="navbarNavAltMarkup">
+                <div class="navbar-nav header-link">
+                    <a class="nav-item nav-link" href="{% url 'home' %}">Главная</a>
+                    <a class="nav-item nav-link" href="{% url 'works' %}">Видео-работы</a>
+                    <a class="nav-item nav-link" href="{% url 'order' %}">Заказать видеосъемку</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+
+    {% block one %}{% endblock %}
+    {% block two %}{% endblock %}
+    {% block three %}{% endblock %}
+    {% block four %}{% endblock %}
+    {% block five %}{% endblock %}
+
+
+    <footer class="bg-dark">
+        <div class="container footer">
+            <div class="row justify-content-md-center">
+                <div class="col-md-3 text-light align-self-center">
+                    <h1 class="navbar-brand title">I LOVE PHOTO!</h1>
+                </div>
+                <div class="col-md-5 nav flex-column">
+                    <a class="nav-item nav-link text-light" href="{% url 'home' %}">Главная</a>
+                    <a class="nav-item nav-link text-light" href="{% url 'works' %}">Видео-работы</a>
+                    <a class="nav-item nav-link text-light" href="{% url 'order' %}">Заказать видеосъемку</a>
+                </div>
+                <div class="col-md-4 align-self-center text-light text-center">
+                    <div class="row justify-content-md-center">
+                        <a class="mx-1" href="#">
+                            <img src="{% static 'image/vk.png' %}" alt="vk">
+                        </a>
+                        <a class="mx-1" href="#">
+                            <img src="{% static 'image/yt.png' %}" alt="yt">
+                        </a>
+                        <a class="mx-1" href="#">
+                            <img src="{% static 'image/inst.png' %}" alt="inst">
+                        </a>
+                    </div>
+                    <h4 class="mt-1">email@email.com</h4>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.js" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        crossorigin="anonymous"></script>
+
+        {% block scripts %}{% endblock %}
+
+</body>
+
+</html>

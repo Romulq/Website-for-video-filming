@@ -1,0 +1,76 @@
+{% extends "film_site/index.html" %}
+{% load static %}
+
+{% block one %}
+
+<div class="razdel-2 py-6">
+    <div class="container">
+
+        <h2 class="text-center mb-6">Мои видео-работы</h2>
+
+        <h4 class="text-center mb-4">Выберите интересующую вас категорию</h3>
+
+        <ul class="nav nav-tabs col-md-12 justify-content-center">
+            {% for type in types %}
+                <li class="nav-item">
+                    <h5 class="nav-link my-0 mr-3" data-toggle="tab" href="#{{ type.slug }}"><b>{{ type.name}}</b></h5>
+                </li>
+            {% endfor %}
+        </ul>
+        <div class="tab-content">
+            {% for type in types %}
+                <div class="tab-pane fade" id="{{ type.slug }}">
+                    <div class="row">
+                        {% for work in works %}
+                            {% if work.videoType.slug == type.slug %}
+                                <div class="col-md-6 mt-4 mb-3">
+                                    <div class="card shadow">
+                                        <video height="300" controls>
+                                            <source src="{{ work.videoFile.url }}" type="video/mp4">
+                                            </source>
+                                        </video>
+                                        <div class="card-body text-center">
+                                            <div class="card-title">
+                                                <h3>{{ work.name }}</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+
+<!-- <script>
+    $(document).ready(function () {
+        $('#types').change(function () {
+            var types = $('#types').find(":selected");
+            var type = types.data("option");
+            console.log(type);
+
+            $.ajax({
+                type: 'GET',
+                url: type,
+                success: function (response) {
+                    if (response.success) {
+
+                        alert(response.data)
+
+                    }
+                }
+            });
+        });
+    });
+</script> -->
+
+{% endblock %}

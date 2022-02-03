@@ -1,0 +1,56 @@
+{% extends "film_site/index.html" %}
+{% load static %}
+
+{% block one %}
+
+    <div class="container offer">
+        <div class="row offer">
+            <div class="col-md-6 offer-text align-self-center">
+                <h1 class="mb-0">Привет друг!</h1>
+                <h1 class="subtitle mb-0">Меня зовут <b>{{ aboutMe.firstName }} {{ aboutMe.lastName }}</b> и я начинающий оператор</h1>
+            </div>
+            <div class="col-md-6 offer-image">
+                <img class="img-fluid rounded" src="{{ aboutMe.selfy.url }}" alt="selfy">
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block two %}
+
+    <div class="razdel py-6 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-6">Немного обо мне</h2>
+            <h4 class="text-center"> {{ aboutMe.description }} </h4>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block three %}
+
+    <div class="razdel-2 py-6">
+        <div class="container">
+            <h2 class="text-center mb-6">Мои работы</h2>
+            <div class="row">
+                {% for work in works %}
+                    <div class="col-md-6">
+                        <div class="card shadow">
+                            <video height="300" controls>
+                                <source src="{{ work.videoFile.url }}" type="video/mp4"></source>
+                            </video>
+                            <div class="card-body text-center">
+                                <div class="card-title">
+                                <h6>{{ work.videoType }}</h6>
+                                <h3>{{ work.name }}</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

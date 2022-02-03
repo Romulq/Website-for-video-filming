@@ -1,0 +1,10 @@
+{% extends 'admin/change_list.html' %}
+{% load crispy_forms_tags %}
+
+{% block result_list %}
+
+    {{ block.super }}
+    
+    <p class="paginator">Итоговая цена: {{ cl.total_count|default:0 }}</p>
+    
+{% endblock %}
