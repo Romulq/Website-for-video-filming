@@ -1,1 +1,1 @@
-web: gunicorn site_video_filming:app
+web: gunicorn site_video_filming.wsgi
