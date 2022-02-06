@@ -1,10 +1,13 @@
 from django.contrib import admin
+from django.contrib.admin import AdminSite
 from django.contrib.admin.views.main import ChangeList
 from django.db.models import Sum
 from django.contrib.auth.models import User
 from django.contrib.auth.models import Group
 
 from .models import VideoType, MyWorks, AboutMe, Order
+
+AdminSite.site_header = "Только для администратора сайта"
 
 @admin.register(VideoType)
 class VideoTypeAdmin(admin.ModelAdmin):
