@@ -38,8 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'cloudinary_storage',
     'django.contrib.staticfiles',
     'film_site.apps.FilmSiteConfig',
+    'cloudinary',
     'crispy_forms',
 ]
 
@@ -125,6 +127,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+### раскомментить для локала
 # STATICFILES_DIRS = [
 #     (os.path.join(BASE_DIR, 'static'))
 # ]
@@ -142,6 +145,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Activate Django-Heroku.
 django_heroku.settings(locals())
 
+# логгер django под heroku
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -158,3 +162,10 @@ LOGGING = {
     },
 }
 
+# облачное хранилище
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'hhzyorxke',
+    'API_KEY': '346649119878948',
+    'API_SECRET': 'sPdd5rD8ISVwN89YFz66HdbIqFI',
+}
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
