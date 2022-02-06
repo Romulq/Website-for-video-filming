@@ -4,7 +4,7 @@
 
 {% block one %}
 
-<div class="container offer">
+<div class="container">
     <div class="row offer">
         <div class="col-md-12 offer-text ">
             <h1 class="mb-0 text-center">Заказ видеосъемки</h1>
@@ -12,7 +12,7 @@
     </div>
 </div>
 
-<div class="razdel-2">
+<div class="order">
     <form class="container" id="buyer" action="{% url 'order' %}" method="post">
         {% csrf_token %}
         <div class="row align-self-center">

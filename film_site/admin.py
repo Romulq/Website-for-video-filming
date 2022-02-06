@@ -1,6 +1,8 @@
 from django.contrib import admin
 from django.contrib.admin.views.main import ChangeList
 from django.db.models import Sum
+from django.contrib.auth.models import User
+from django.contrib.auth.models import Group
 
 from .models import VideoType, MyWorks, AboutMe, Order
 
@@ -16,13 +18,13 @@ class MyWorksAdmin(admin.ModelAdmin):
     model = MyWorks
     list_display = ('name', 'videoType')
     search_fields = ['name', 'videoType__name']
-    list_filter = ['videoType__name',]
+    list_filter = ['videoType__name']
 
 
-@admin.register(AboutMe)
-class AboutMeAdmin(admin.ModelAdmin):
-    model = AboutMe
-    search_fields = ['firstName', 'lastName']
+# @admin.register(AboutMe)
+# class AboutMeAdmin(admin.ModelAdmin):
+#     model = AboutMe
+#     search_fields = ['firstName', 'lastName']
 
 
 class TotalPrice(ChangeList):
@@ -37,10 +39,14 @@ class OrderAdmin(admin.ModelAdmin):
     change_list_template = "admin/model_change_list.html"
     
     model = Order
-    list_display = ('created_at', 'lastName', 'price', 'eventDate', 'typeVideo', 'timeWork', 'email')
-    search_fields = ['lastName', 'price', 'eventDate', 'typeVideo__name', 'timeWork']
-    list_filter = ['typeVideo__name',]
-    date_hierarchy = ('eventDate')
+    list_display = ('created_at', 'lastName', 'firstName', 'price', 'eventDate', 'typeVideo', 'timeWork', 'email')
+    search_fields = ['lastName', 'firstName', 'price', 'eventDate', 'typeVideo__name', 'timeWork']
+    list_filter = ['typeVideo__name']
+    date_hierarchy = 'eventDate'
 
     def get_changelist(self, request):
         return TotalPrice
+
+
+admin.site.unregister(User)
+admin.site.unregister(Group)

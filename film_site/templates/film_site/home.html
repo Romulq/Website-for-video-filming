@@ -35,7 +35,7 @@
             <h2 class="text-center mb-6">Мои работы</h2>
             <div class="row">
                 {% for work in works %}
-                    <div class="col-md-6">
+                    <div class="col-md-6 mb-4">
                         <div class="card shadow">
                             <video height="300" controls>
                                 <source src="{{ work.videoFile.url }}" type="video/mp4"></source>

@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from django.views import View
 from django.contrib import messages
 
-from .models import VideoType, MyWorks, AboutMe, Order
+from .models import VideoType, MyWorks, AboutMe
 from .forms import OrderForm
 
 
@@ -38,9 +38,8 @@ class WorksView(View):
 
 class CalcView(View):
 
-    def post(self, request, *args, **kwargs):
-        
-        result = 0
+    def post(self, request):
+
         form = OrderForm(request.POST or None)
 
         if form.is_valid():
@@ -65,11 +64,9 @@ class OrderView(View):
 
         return render(request, 'film_site/order.html', context)
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request):
         form = OrderForm(request.POST or None)
-        print(form)
         if form.is_valid():
-            print('true')
             new_order = form.save(commit=False)
             new_order.firstName = form.cleaned_data['firstName']
             new_order.lastName = form.cleaned_data['lastName']
@@ -88,6 +85,5 @@ class OrderView(View):
 
             messages.add_message(request, messages.INFO, 'Спасибо за ваш заказ!')
             return HttpResponseRedirect('/')
-        print('false')
         messages.add_message(request, messages.ERROR, 'Произошла ошибка! Попробуйте еще раз!')
         return HttpResponseRedirect('/order/')
