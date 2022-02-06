@@ -1,4 +1,5 @@
 from django.db import models
+from cloudinary.models import CloudinaryField
 
 
 class VideoType(models.Model):
@@ -17,7 +18,7 @@ class VideoType(models.Model):
 class MyWorks(models.Model):
     name = models.CharField(max_length=255, verbose_name='Название видеоролика')
     videoType = models.ForeignKey(VideoType, on_delete=models.CASCADE, verbose_name='Типы съемки видеоролика')
-    videoFile = models.FileField(upload_to='videos/', null=True, verbose_name='Видеоролик')
+    videoFile = CloudinaryField('Видеоролик', resource_type='video')
 
     def __str__(self):
         return self.name

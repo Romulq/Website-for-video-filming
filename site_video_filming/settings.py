@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import django_heroku
+import cloudinary
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -168,4 +169,9 @@ CLOUDINARY_STORAGE = {
     'API_KEY': '346649119878948',
     'API_SECRET': 'sPdd5rD8ISVwN89YFz66HdbIqFI',
 }
+cloudinary.config(
+cloud_name="hhzyorxke",
+api_key="346649119878948",
+api_secret="sPdd5rD8ISVwN89YFz66HdbIqFI"
+)
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
