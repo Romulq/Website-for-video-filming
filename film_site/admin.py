@@ -4,6 +4,9 @@ from django.contrib.admin.views.main import ChangeList
 from django.db.models import Sum
 from django.contrib.auth.models import User
 from django.contrib.auth.models import Group
+from django.contrib import admin
+from django.db import models
+from django.forms.widgets import TextInput
 
 from .models import VideoType, MyWorks, AboutMe, Order
 
@@ -40,12 +43,28 @@ class TotalPrice(ChangeList):
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
     change_list_template = "admin/model_change_list.html"
-    
+
     model = Order
-    list_display = ('created_at', 'lastName', 'firstName', 'price', 'eventDate', 'typeVideo', 'timeWork', 'email')
-    search_fields = ['lastName', 'firstName', 'price', 'eventDate', 'typeVideo__name', 'timeWork']
+    list_display = ('create_at', 'full_name', 'email', 'event_date', 'event_time', 'typeVideo', 'timeWork', 'price')
+    search_fields = ['full_name', 'eventDate', 'typeVideo__name', 'price']
     list_filter = ['typeVideo__name']
     date_hierarchy = 'eventDate'
+
+    def full_name(self, obj):
+        return obj.get_full_name()
+    full_name.short_description = 'ЗАКАЗЧИК'
+
+    def event_date(self, obj):
+        return obj.eventDate.strftime("%d.%m.%Y")
+    event_date.short_description = 'ДАТА СЪЕМОК'
+
+    def create_at(self, obj):
+        return obj.created_at.strftime("%d.%m.%Y")
+    create_at.short_description = 'ДАТА ЗАКАЗА'
+
+    def event_time(self, obj):
+        return obj.eventTime.strftime("%H:%M")
+    event_time.short_description = 'ВРЕМЯ НАЧАЛА СЪЕМОК'
 
     def get_changelist(self, request):
         return TotalPrice

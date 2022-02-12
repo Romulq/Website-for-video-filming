@@ -1,4 +1,5 @@
 from django.db import models
+import datetime
 from cloudinary.models import CloudinaryField
 
 
@@ -46,13 +47,17 @@ class Order(models.Model):
     firstName = models.CharField(max_length=255, verbose_name='Имя заказчика')
     lastName = models.CharField(max_length=255, verbose_name='Фамилия заказчика')
     eventDate = models.DateField(verbose_name='Дата съемок')
+    eventTime = models.TimeField(default=datetime.time(00, 00), verbose_name='Время начала съемок')
     typeVideo = models.ForeignKey(VideoType, on_delete=models.CASCADE, verbose_name='Тип съемки')
-    timeWork = models.PositiveIntegerField(default=0, verbose_name='Время съемки', help_text='часов')
+    timeWork = models.PositiveIntegerField(default=0, verbose_name='Длительность съемки (ч)')
     suggestions = models.TextField(blank=True, max_length=511, verbose_name='Пожелания заказчика')
     phone = models.CharField(max_length=12, verbose_name='Номер телефона заказчика', blank=True)
     email = models.EmailField(max_length=127, verbose_name='Email заказчика')
-    price = models.DecimalField(default=0.0, max_digits=8, decimal_places=2, verbose_name='Итоговая цена заказа', help_text='рублей')
-    created_at = models.DateTimeField(auto_now=True, verbose_name='Дата создания заказа')
+    price = models.DecimalField(default=0.0, max_digits=8, decimal_places=2, verbose_name='Цена', help_text='рублей')
+    created_at = models.DateTimeField(auto_now=True, verbose_name='Дата заказа')
+
+    def get_full_name(self):
+        return self.lastName + ' ' + self.firstName
 
     def __str__(self):
         return self.firstName + ' ' + self.lastName

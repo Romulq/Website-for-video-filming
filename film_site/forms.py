@@ -1,12 +1,13 @@
 from django import forms
-from django.contrib.auth.models import User
-
 from .models import Order
 
 
 class OrderForm(forms.ModelForm):
 
-    eventDate = forms.DateField(widget=forms.TextInput(attrs={'type': 'date'}), label='Дата проведения съемки')   
+    required_css_class = 'required'
+
+    eventDate = forms.DateField(widget=forms.TextInput(attrs={'type': 'date'}), label='Дата проведения съемки') 
+    eventTime = forms.TimeField(widget=forms.TimeInput(attrs={'type': 'time'}, format='%H:%M'), label='Время проведения съемки') 
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -17,10 +18,10 @@ class OrderForm(forms.ModelForm):
             'firstName',
             'lastName',
             'eventDate',
+            'eventTime',
             'typeVideo',
             'timeWork',
             'suggestions',
             'phone',
             'email'
         ]
-

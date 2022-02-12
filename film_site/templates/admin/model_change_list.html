@@ -3,8 +3,24 @@
 
 {% block result_list %}
 
+    <style>
+        .field-price, .field-timeWork, .field-event_time, .field-event_date, .field-typeVideo {
+            text-align:right;
+        }
+        .sortable.column-price a, .sortable.column-timeWork a, .column-event_time span, .column-event_date span, 
+        .sortable.column-typeVideo a {
+            text-align:right;
+        }
+        .sortable.column-timeWork, .column-event_time {
+            width: 160px;
+        }
+        #changelist-filter {
+            flex: 0 0 120px;
+        }
+    </style>
+
     {{ block.super }}
     
-    <p class="paginator">Итоговая цена: {{ cl.total_count|default:0 }}</p>
+    <p class="paginator" style="text-align:right;"><b>ИТОГО: <span style="margin-left: 10px;">{{ cl.total_count|default:0.00 }}</span></b></p>
     
 {% endblock %}
