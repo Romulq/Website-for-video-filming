@@ -11,7 +11,7 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AlterField(
+        migrations.AddField(
             model_name='order',
             name='eventTime',
             field=models.TimeField(default=datetime.time(0, 0), verbose_name='Время начала съемок'),
