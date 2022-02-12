@@ -25,10 +25,10 @@ class MyWorksAdmin(admin.ModelAdmin):
     list_filter = ['videoType__name']
 
 
-@admin.register(AboutMe)
-class AboutMeAdmin(admin.ModelAdmin):
-    model = AboutMe
-    search_fields = ['firstName', 'lastName']
+# @admin.register(AboutMe)
+# class AboutMeAdmin(admin.ModelAdmin):
+#     model = AboutMe
+#     search_fields = ['firstName', 'lastName']
 
 
 class TotalPrice(ChangeList):
