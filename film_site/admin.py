@@ -5,8 +5,6 @@ from django.db.models import Sum
 from django.contrib.auth.models import User
 from django.contrib.auth.models import Group
 from django.contrib import admin
-from django.db import models
-from django.forms.widgets import TextInput
 
 from .models import VideoType, MyWorks, AboutMe, Order
 
@@ -27,10 +25,10 @@ class MyWorksAdmin(admin.ModelAdmin):
     list_filter = ['videoType__name']
 
 
-# @admin.register(AboutMe)
-# class AboutMeAdmin(admin.ModelAdmin):
-#     model = AboutMe
-#     search_fields = ['firstName', 'lastName']
+@admin.register(AboutMe)
+class AboutMeAdmin(admin.ModelAdmin):
+    model = AboutMe
+    search_fields = ['firstName', 'lastName']
 
 
 class TotalPrice(ChangeList):
