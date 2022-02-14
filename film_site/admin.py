@@ -44,7 +44,7 @@ class OrderAdmin(admin.ModelAdmin):
 
     model = Order
     list_display = ('create_at', 'full_name', 'email', 'event_date', 'event_time', 'typeVideo', 'timeWork', 'price')
-    search_fields = ['full_name', 'eventDate', 'typeVideo__name', 'price']
+    search_fields = ['firstName', 'lastName', 'eventDate', 'typeVideo__name', 'price']
     list_filter = ['typeVideo__name']
     date_hierarchy = 'eventDate'
 
