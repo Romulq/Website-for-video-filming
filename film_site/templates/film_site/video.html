@@ -1,0 +1,128 @@
+{% extends "film_site/index.html" %}
+{% load static %}
+
+{% block one %}
+
+<div class="razdel-2 py-6">
+    <h2 class="text-center mb-5">Подборки по хештегам</h2>
+
+    <div class="row">
+        <div class="col-md-3">
+            <form class="container" id="filter">
+                <h4 class="text-center mb-3">Выбери хештеги</h3>
+                    {% for hashtag in hashtags %}
+                    <div class="mx-5" style="font-size: 20px;">
+                        <input class="check ml-2 mr-2" data-hashtag="{{ hashtag.id }}" type="checkbox">{{ hashtag.name
+                        }}</input>
+                    </div>
+                    {% endfor %}
+                    <div class="text-center">
+                        <input id="filterbutton" class='btn btn-outline-info mt-3' type="submit" value="Применить"/>
+                    </div>
+                </h4>
+            </form>
+        </div>
+        <div class="col-md-9 col-sm-12">
+            <div class="container">
+                <div id="works" class="row">
+                    {% for work in works %}
+                    <div class="col-md-6 mt-4 mb-3">
+                        <div class="card shadow">
+                            <video height="300" controls>
+                                <source src="{{ work.videoFile.url }}" type="video/mp4">
+                                </source>
+                            </video>
+                            <div class="card-body text-center">
+                                <div class="card-title">
+                                    <h3>{{ work.name }}</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<template id="work">
+    <div class="col-md-6 mt-4 mb-3">
+        <div class="card shadow">
+            <video height="300" controls>
+                <source id="videofile" src="" type="video/mp4">
+                </source>
+            </video>
+            <div class="card-body text-center">
+                <div class="card-title">
+                    <h3 id="name"></h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<template id="workNotWound">
+    <h4 id="message" class="col-md-12 text-center mt-6 pt-5"></h4>
+</template>
+
+{% endblock %}
+
+{% block scripts %}
+
+<script>
+
+    $("#filterbutton").click(function (e) {
+        e.preventDefault();
+
+        var form = $("#filter").get(0).getElementsByClassName("check");
+
+        var hashtag = [];
+        Array.from(form).forEach(inpt => {
+            if (inpt.checked) {
+                hashtag.push(inpt.getAttribute("datahashtag-"));
+            }
+        });
+
+        $.ajax({
+            type: 'GET',
+            url: "{% url 'video' %}type",
+            dataType: "json",
+            data: {
+                "hashtags": hashtag,
+            },
+            success: function (response) {
+
+                const container = document.getElementById("works");
+                const template = document.getElementById("work");
+                const notWorks = document.getElementById("doesNotWork");
+
+                container.innerHTML = "";
+
+                if (response.data == null) {
+
+                    const itemVideo = notWorks.content.cloneNode(true);
+                    itemVideo.getElementById("message").textContent = response.message;
+
+                    container.appendChild(itemVideo);
+                } else {
+
+                    Array.from(response.data).forEach(item => {
+
+                        const itemVideo = template.content.cloneNode(true);
+                        itemVideo.getElementById("name").textContent = item[1];
+                        itemVideo.getElementById("videofile").setAttribute("src", item[3]);
+
+                        container.appendChild(itemVideo);
+                    });
+                }
+            },
+            error: function (response) {
+                console.log(response.data)
+            }
+        });
+    });
+
+</script>
+
+{% endblock %}
