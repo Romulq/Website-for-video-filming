@@ -31,7 +31,7 @@
             <div class="col-md-8 mt-3">
                 {{ form.suggestions|as_crispy_field }}
             </div>
-            <div class="row col-md-8 justify-content-md-between">
+            <div class="row col-md-8 justify-content-md-between ml-2">
                 <div class="col-md-3 mt-3 px-0">
                     <input class='btn btn-primary' id="buy" type="submit" value="ЗАКАЗАТЬ" disabled/>
                 </div>
@@ -70,7 +70,9 @@
     $("#calc").click(function (e) {
         e.preventDefault();
 
-        var form = $("#buyer"); 
+        var form = $("#buyer");
+
+        console.log(form);
 
         $.ajax({
             headers: {

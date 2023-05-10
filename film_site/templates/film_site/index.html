@@ -23,7 +23,7 @@
 
     <header>
         <nav class="container navbar navbar-expand-lg navbar-light">
-            <h1 class="navbar-brand title" href="#">I LOVE VIDEO</h1>
+            <h1 class="navbar-brand title" href="#">I MAKE A VIDEO</h1>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
                 aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -33,6 +33,7 @@
                     <a class="nav-item nav-link" style="font-size: 20px; color: rgba(0,0,0,.6)" href="{% url 'home' %}">Главная</a>
                     <a class="nav-item nav-link" style="font-size: 20px; color: rgba(0,0,0,.6)" href="{% url 'works' %}">Видео-работы</a>
                     <a class="nav-item nav-link" style="font-size: 20px; color: rgba(0,0,0,.6)" href="{% url 'order' %}">Заказать видеосъемку</a>
+                    <a class="nav-item nav-link" style="font-size: 20px; color: rgba(0,0,0,.6)" href="{% url 'video' %}">Хештеги</a>
                 </div>
             </div>
         </nav>
@@ -47,10 +48,6 @@
             {% endfor %}
         {% endif %}
     </header>
-
-
-
-
     {% block one %}{% endblock %}
     {% block two %}{% endblock %}
     {% block three %}{% endblock %}
@@ -61,27 +58,29 @@
     <footer class="bg-dark">
         <div class="container footer">
             <div class="row justify-content-md-center">
-                <div class="col-md-3 text-light align-self-center">
-                    <h1 class="navbar-brand title">I LOVE VIDEO</h1>
+                <div class="col-md-4 text-light align-self-center ">
+                    <h1 class="navbar-brand title">I MAKE A VIDEO</h1>
                 </div>
-                <div class="col-md-5 nav flex-column">
+                <div class="col-md-4 nav flex-column ">
                     <a class="nav-item nav-link text-light" href="{% url 'home' %}">Главная</a>
                     <a class="nav-item nav-link text-light" href="{% url 'works' %}">Видео-работы</a>
                     <a class="nav-item nav-link text-light" href="{% url 'order' %}">Заказать видеосъемку</a>
-                    <a class="nav-item nav-link text-light" href="/admin">Панель администратора</a>
+                    <a class="nav-item nav-link text-light" href="{% url 'video' %}">Хештеги</a>
+                    <!--a class="nav-item nav-link text-light" href="/admin">Панель администратора</a-->
+                    
                 </div>
-                <div class="col-md-4 align-self-center text-light text-center">
-                    <h4 class="mb-2">Связаться через соц.сети</h4>
-                    <div class="row justify-content-md-center">
+                <div class="col-md-4 align-self-center text-light  ">
+                    <h4 class="mb-2">Связаться с видеооператором</h4>
+                    <div class="row justify-content-md-center ml-1">
                         <a class="mx-1" href="https://vk.com/valentiukevich">
                             <img src="{% static 'image/vk.png' %}" alt="vk">
                         </a>
                         <a class="mx-1" href="https://t.me/Muberd">
                             <img src="{% static 'image/tg.png' %}" alt="tg">
                         </a>
-                        <a class="mx-1" href="https://www.instagram.com/valentyukevich_dmitriy">
+                        <!-- <a class="mx-1" href="https://www.instagram.com/valentyukevich_dmitriy">
                             <img src="{% static 'image/inst.png' %}" alt="inst">
-                        </a>
+                        </a> -->
                     </div>
                 </div>
             </div>

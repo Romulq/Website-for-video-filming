@@ -4,7 +4,7 @@ from cloudinary.models import CloudinaryField
 
 
 class VideoType(models.Model):
-    name = models.CharField(verbose_name='Тип съемки', max_length=255)
+    name = models.CharField(verbose_name='Вид съемки', max_length=255)
     price = models.PositiveIntegerField(default=0, verbose_name='Цена', help_text='руб/час')
     slug = models.SlugField(default='type', verbose_name='Короткое название (на англ.)', max_length=32)
 
@@ -12,13 +12,26 @@ class VideoType(models.Model):
         return self.name
 
     class Meta:
-        verbose_name = 'Тип съемки'
-        verbose_name_plural = 'Типы съемки'
+        verbose_name = 'Вид съемки'
+        verbose_name_plural = 'Виды съемки'
 
+
+class Hashtags(models.Model):
+    name = models.CharField(verbose_name='Хештег', max_length=255)
+    slug = models.SlugField(default='type', verbose_name='Короткое название (на англ.)', max_length=32)
+    videos = models.ManyToManyField('MyWorks', verbose_name='Видео ролики', blank=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Хештег'
+        verbose_name_plural = 'Хештеги'
 
 class MyWorks(models.Model):
     name = models.CharField(max_length=255, verbose_name='Название видеоролика')
-    videoType = models.ForeignKey(VideoType, on_delete=models.CASCADE, verbose_name='Типы съемки видеоролика')
+    videoType = models.ForeignKey(VideoType, on_delete=models.CASCADE, verbose_name='Виды съемки видеоролика')
+    hashtag = models.ManyToManyField(Hashtags, verbose_name="Хештеги")
     videoFile = CloudinaryField('Видеоролик', resource_type='video')
 
     def __str__(self):
@@ -48,7 +61,7 @@ class Order(models.Model):
     lastName = models.CharField(max_length=255, verbose_name='Фамилия заказчика')
     eventDate = models.DateField(verbose_name='Дата съемок')
     eventTime = models.TimeField(default=datetime.time(00, 00), verbose_name='Время начала съемок')
-    typeVideo = models.ForeignKey(VideoType, on_delete=models.CASCADE, verbose_name='Тип съемки')
+    typeVideo = models.ForeignKey(VideoType, on_delete=models.CASCADE, verbose_name='Вид съемки')
     timeWork = models.PositiveIntegerField(default=0, verbose_name='Длительность съемки (ч)')
     suggestions = models.TextField(blank=True, max_length=511, verbose_name='Пожелания заказчика')
     phone = models.CharField(max_length=12, verbose_name='Номер телефона заказчика', blank=True)
@@ -65,3 +78,4 @@ class Order(models.Model):
     class Meta:
         verbose_name = 'Заказ'
         verbose_name_plural = 'Заказы'
+

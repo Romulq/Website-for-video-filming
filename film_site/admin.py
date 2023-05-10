@@ -6,9 +6,13 @@ from django.contrib.auth.models import User
 from django.contrib.auth.models import Group
 from django.contrib import admin
 
-from .models import VideoType, MyWorks, AboutMe, Order
+from django.contrib.admin.models import LogEntry
 
-AdminSite.site_header = "Только для администратора сайта"
+from .models import VideoType, MyWorks, AboutMe, Order, Hashtags
+
+AdminSite.site_header = "Только для видеооператора сайта"
+
+# LogEntry.objects.all().delete()
 
 @admin.register(VideoType)
 class VideoTypeAdmin(admin.ModelAdmin):
@@ -25,10 +29,14 @@ class MyWorksAdmin(admin.ModelAdmin):
     list_filter = ['videoType__name']
 
 
-# @admin.register(AboutMe)
-# class AboutMeAdmin(admin.ModelAdmin):
-#     model = AboutMe
-#     search_fields = ['firstName', 'lastName']
+@admin.register(Hashtags)
+class HashtagsAdmin(admin.ModelAdmin):
+    model = Hashtags
+
+@admin.register(AboutMe)
+class AboutMeAdmin(admin.ModelAdmin):
+    model = AboutMe
+    search_fields = ['firstName', 'lastName']
 
 
 class TotalPrice(ChangeList):

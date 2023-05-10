@@ -2,19 +2,21 @@ from django.shortcuts import render, HttpResponseRedirect
 from django.http import JsonResponse
 from django.views import View
 from django.contrib import messages
+from django.db.models import Q
 
-from .models import VideoType, MyWorks, AboutMe
+from .models import VideoType, MyWorks, AboutMe, Hashtags
 from .forms import OrderForm
+
+import json
 
 
 class HomeView(View):
 
     def get(self, request):
-
         types = VideoType.objects.all()
         works = MyWorks.objects.all()[:6]
         aboutMe = AboutMe.objects.first()
-        
+
         context = {
             'types': types, 'works': works, 'aboutMe': aboutMe
         }
@@ -25,9 +27,8 @@ class HomeView(View):
 class WorksView(View):
 
     def get(self, request):
-
         types = VideoType.objects.all()
-        works = MyWorks.objects.all()            
+        works = MyWorks.objects.all()
 
         context = {
             'types': types, 'works': works
@@ -39,12 +40,11 @@ class WorksView(View):
 class CalcView(View):
 
     def post(self, request):
-
         form = OrderForm(request.POST or None)
 
         if form.is_valid():
             print("Success")
-        
+
         type = VideoType.objects.get(id=form.data['typeVideo'])
         time = form.data['timeWork']
         result = int(type.price) * int(time)
@@ -55,8 +55,7 @@ class CalcView(View):
 class OrderView(View):
 
     def get(self, request):
-
-        form = OrderForm(request.POST or None)
+        form = OrderForm(request.GET or None)
 
         context = {
             "form": form
@@ -87,3 +86,61 @@ class OrderView(View):
             return HttpResponseRedirect('/')
         messages.add_message(request, messages.ERROR, 'Произошла ошибка! Попробуйте еще раз!')
         return HttpResponseRedirect('/order/')
+
+
+class VideoView(View):
+
+    def get(self, request):
+        types = VideoType.objects.all()
+        works = MyWorks.objects.all()
+        hashtags = Hashtags.objects.all()
+
+        context = {
+            'types': types, 'works': works, 'hashtags': hashtags
+        }
+
+        return render(request, 'film_site/video.html', context)
+
+
+def query_to_json(works):
+    json_works = []
+    for work in works.values():
+        tmp = []
+        for param in work.values():
+            tmp.append(param)
+        tmp.pop()
+        url = "http://res.cloudinary.com/hhzyorxke/" + work.get("videoFile").get_prep_value()
+        tmp.append(url)
+
+        json_works.append(tmp)
+
+    return json_works
+
+
+def exclusive_in(cls, column, operator, value_list):
+    myfilter = column + '__' + operator
+    query = cls.objects
+    for value in value_list:
+        query = query.filter(**{myfilter: value})
+    return query
+
+
+class TypeVideoView(View):
+
+    def get(self, request):
+
+        checkboxs = request.GET or None
+
+        # если ни один фильтр не был выбран
+        if (checkboxs is None):
+            works = MyWorks.objects.all()
+            return JsonResponse({'data': query_to_json(works)}, status=200)
+
+        tags = checkboxs.getlist("hashtags[]")
+
+        works = exclusive_in(MyWorks, 'hashtag', 'id', tags)
+
+        if len(works) == 0:
+            return JsonResponse({'data': None, 'message': 'Упс, роликов с такими тегами не найдено :('}, status=200)
+
+        return JsonResponse({'data': query_to_json(works), 'message': None}, status=200)

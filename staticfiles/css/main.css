@@ -262,3 +262,7 @@ nav.container {
 .nav-item:hover {
     cursor: pointer;
 }
+
+.filter {
+    float: left;
+}
